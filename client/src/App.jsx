@@ -13,6 +13,7 @@ import ShopHomepage from "./pages/shop/ShopHomepage";
 import ShopProductListing from "./pages/shop/ShopProductListing";
 import ShopCheckout from "./pages/shop/ShopCheckout";
 import ShopAccount from "./pages/shop/ShopAccount";
+import AuthProtect from "./UI/AuthProtect";
 
 export default function App() {
   return (
@@ -25,8 +26,16 @@ export default function App() {
           <Route path="login" element={<Login />} />
         </Route>
         {/* ADMIN ROUTES */}
-        <Route path="admin" element={<AdminLayout />}>
-          <Route path="dashboard" element={<AdminDashboard />} />
+
+        <Route
+          path="admin"
+          element={
+            <AuthProtect>
+              <AdminLayout />
+            </AuthProtect>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="features" element={<AdminFeatures />} />
@@ -39,6 +48,7 @@ export default function App() {
           <Route path="checkout" index element={<ShopCheckout />} />
           <Route path="account" index element={<ShopAccount />} />
         </Route>
+
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
