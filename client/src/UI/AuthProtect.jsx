@@ -1,8 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom";
 
 export default function AuthProtect({ children }) {
-  const isAuthenticated = true;
-  let user;
+  const isAuthenticated = false;
+  let user = {
+    role: "user",
+  };
   const location = useLocation();
 
   if (isAuthenticated && location.pathname.includes("/login")) {

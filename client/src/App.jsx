@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import AuthLayout from "./UI/AuthLayout";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -42,7 +43,14 @@ export default function App() {
         </Route>
 
         {/* SHOP ROUTES */}
-        <Route path="shop" element={<ShopLayout />}>
+        <Route
+          path="shop"
+          element={
+            <AuthProtect>
+              <ShopLayout />
+            </AuthProtect>
+          }
+        >
           <Route index element={<ShopHomepage />} />
           <Route path="listing" index element={<ShopProductListing />} />
           <Route path="checkout" index element={<ShopCheckout />} />
@@ -51,6 +59,7 @@ export default function App() {
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 }
