@@ -7,6 +7,8 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const app = express();
 
+const authRouter = require("./routes/authRoutes");
+
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
@@ -41,4 +43,18 @@ app.get("/", (req, res) => {
 });
 app.listen(port, () => {
   console.log(`App is running on port: ${port}`);
+});
+
+//Routes
+app.use("/api/auth", authRouter);
+
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+
+  const message = err.message || "Internal server error";
+
+  return res.status(statusCode).json({
+    status: "fail",
+    message,
+  });
 });

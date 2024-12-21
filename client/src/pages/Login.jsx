@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,7 @@ export default function Login() {
     if (password !== confPassword) {
       return toast.error("Password doesn't match");
     }
+    console.log(email, password, confPassword);
   }
   return (
     <div className="w-1/2 mx-auto">
@@ -68,8 +69,8 @@ export default function Login() {
         </ul>
         <div className="text-center mt-3">
           <p>
-            Don't have an account?{" "}
-            <span>
+            Don't have an account ?
+            <span className="ms-2">
               <Link to="/auth/signup" className="text-blue-800">
                 Sign-up
               </Link>

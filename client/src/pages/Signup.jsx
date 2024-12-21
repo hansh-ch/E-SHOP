@@ -54,8 +54,8 @@ export default function Signup() {
         </ul>
         <div className="text-center mt-3">
           <p>
-            Already have an account?
-            <span>
+            Already have an account ?
+            <span className="ms-2">
               <Link to="/auth/login" className="text-blue-800">
                 Sign-in
               </Link>
