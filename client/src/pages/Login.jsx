@@ -4,12 +4,18 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { loginUserAPI } from "@/services/authAPIServices";
+import { useDispatch } from "react-redux";
+import { loginUser, loginFailed } from "@/slices/userSlice";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
-  function handleSubmit(e) {
+
+  const dispatch = useDispatch();
+
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (!password || !password || !confPassword) {
@@ -18,7 +24,18 @@ export default function Login() {
     if (password !== confPassword) {
       return toast.error("Password doesn't match");
     }
-    console.log(email, password, confPassword);
+    const data = await loginUserAPI({ email, password });
+    // console.log(data);
+    //Dispatch after login success
+    if (data.status === "success") {
+      toast.success("Logged in succesfully");
+      dispatch(loginUser(data.data));
+      return;
+    } else if (data.status === "fail") {
+      toast.error("Login failed");
+      dispatch(loginFailed());
+      return;
+    }
   }
   return (
     <div className="w-1/2 mx-auto">

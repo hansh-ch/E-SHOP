@@ -32,18 +32,18 @@ const signinUser = catchAsync(async (req, res, next) => {
 
   //checking if fields are empty
   if (!email || !password) {
-    return next(appError("All fields are required", 401));
+    return next(appError("All fields are required", 400));
   }
 
   //1) Finding a user with email
   const userExists = await User.findOne({ email });
   if (!userExists) {
-    return next(appError("Invalid email or password", 401));
+    return next(appError("Invalid email or password", 400));
   }
   //2) Compare password
   const correctPassword = await bcrypt.compare(password, userExists.password);
   if (!userExists || !correctPassword) {
-    return next(appError("Invalid email or password", 401));
+    return next(appError("Invalid email or password", 400));
   }
   //3) Everything is OK -login user
   const user = await User.findById(userExists._id).select(
