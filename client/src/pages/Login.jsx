@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUserAPI } from "@/services/authAPIServices";
+import { loginUserAPI, verifyAuth } from "@/services/authAPIServices";
 import { useDispatch } from "react-redux";
 import { loginUser, loginFailed } from "@/slices/userSlice";
 
@@ -15,6 +15,20 @@ export default function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(function () {
+    // const data = verifyAuth().catch((err) =>
+    //   console.log(err.response.data.message)
+    // );
+    const checkAuth = async () => {
+      const data = await verifyAuth().catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message);
+      });
+      console.log(data);
+    };
+    checkAuth();
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
