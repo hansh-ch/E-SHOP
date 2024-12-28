@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
 const appError = require("../utils/appError");
+const { createToken } = require("../utils/jwtToken");
+require("dotenv").config();
 //@desc==> register a user
 //@api ==> /auth/signup
 //@access==> pubic
@@ -49,11 +51,17 @@ const signinUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(userExists._id).select(
     "-password -__v -createdAt -updatedAt"
   );
+  const token = createToken(user._id);
   //   const user = await User.find({ email, password });
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), //30 days
+  });
   res.status(200).json({
     status: "success",
-    data: user,
     message: "Signed in successfully",
+    data: user,
   });
 });
 
