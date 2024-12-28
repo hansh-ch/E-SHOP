@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUserAPI } from "@/services/authAPIServices";
 import { useDispatch } from "react-redux";
 import { loginUser, loginFailed } from "@/slices/userSlice";
@@ -14,6 +14,7 @@ export default function Login() {
   const [confPassword, setConfPassword] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,6 +31,7 @@ export default function Login() {
     if (data.status === "success") {
       toast.success("Logged in succesfully");
       dispatch(loginUser(data.data));
+      navigate("/shop");
       return;
     } else if (data.status === "fail") {
       toast.error("Login failed");

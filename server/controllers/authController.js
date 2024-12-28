@@ -65,4 +65,13 @@ const signinUser = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { signupUser, signinUser };
+//@desc==> login a user
+//@api ==> /auth/signin
+//@access==> pubic
+const logoutUser = catchAsync(async (req, res, next) => {
+  res.clearCookie("token").json({
+    status: "success",
+    message: "Logout successfully",
+  });
+});
+module.exports = { signupUser, signinUser, logoutUser };

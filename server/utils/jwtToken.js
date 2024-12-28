@@ -12,6 +12,7 @@ const createToken = (id) => {
 
 const verifyToken = async (token) => {
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  return decoded;
 };
 
-module.exports = { createToken };
+module.exports = { createToken, verifyToken };
