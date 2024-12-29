@@ -15,6 +15,7 @@ import ShopProductListing from "./pages/shop/ShopProductListing";
 import ShopCheckout from "./pages/shop/ShopCheckout";
 import ShopAccount from "./pages/shop/ShopAccount";
 import AuthProtect from "./UI/AuthProtect";
+import Overview from "./UI/Overview";
 
 export default function App() {
   return (
@@ -22,7 +23,15 @@ export default function App() {
       <Routes>
         {/* <Route path="/" /> */}
         {/* AUTH ROUTES */}
-        <Route path="auth" element={<AuthLayout />}>
+        <Route path="/" index element={<Overview />} />
+        <Route
+          path="auth"
+          element={
+            <AuthProtect>
+              <AuthLayout />
+            </AuthProtect>
+          }
+        >
           <Route path="signup" element={<Signup />} />
           <Route path="login" element={<Login />} />
         </Route>
