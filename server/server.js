@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-
 require("dotenv").config();
 const app = express();
 
 const authRouter = require("./routes/authRoutes");
+const adminRouter = require("./routes/adminRoutes");
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -47,6 +47,7 @@ app.listen(port, () => {
 
 //Routes
 app.use("/api/auth", authRouter);
+app.use("/api/admin", adminRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
