@@ -35,6 +35,7 @@ export default function AdminProducts() {
     if (data.status === "fail") {
       toast.error("Image upload failed");
     }
+
     console.log(data.data.url);
   }
 

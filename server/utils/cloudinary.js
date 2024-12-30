@@ -11,9 +11,11 @@ cloudinary.config({
 const storage = new multer.memoryStorage();
 
 async function handleImageUpload(file) {
-  const result = await cloudinary.uploader.upload(file).catch((error) => {
-    console.log(error);
-  });
+  const result = await cloudinary.uploader
+    .upload(file, { timeout: 600000 })
+    .catch((error) => {
+      console.log(error);
+    });
 
   return result;
 }

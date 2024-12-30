@@ -48,6 +48,7 @@ app.listen(port, () => {
 //Routes
 app.use("/api/auth", authRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/products", adminRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
