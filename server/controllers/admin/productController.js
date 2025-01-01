@@ -27,6 +27,7 @@ const uploadImage = catchAsync(async (req, res, next) => {
 const createProduct = catchAsync(async (req, res, next) => {
   const { title, description, category, brand, price, inStock, imageUrl } =
     req.body;
+
   if (!req.body) {
     return;
   }
@@ -39,9 +40,9 @@ const createProduct = catchAsync(async (req, res, next) => {
     inStock,
     imageUrl,
   });
-  console.log(product);
+
   if (!product) return next(appError("Cannot create product", 500));
-  console.log(product);
+
   res.status(200).json({
     status: "success",
     message: "Product created successfully",
@@ -67,6 +68,7 @@ const getAllProducts = catchAsync(async (req, res, next) => {
 //@api ==> /admin/update:id
 //@access==> private->admin
 const updateProduct = catchAsync(async (req, res, next) => {
+  console.log(req.body);
   const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });

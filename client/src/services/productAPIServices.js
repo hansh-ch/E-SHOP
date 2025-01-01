@@ -27,13 +27,14 @@ export const createProductAPI = async (formdata) => {
 
 /*==> Edit Product ==*/
 export const editProductAPI = async (id, formdata) => {
+  console.log(id);
   const { data } = await axios.put(`${EDIT_PRODUCT_URL}/${id}`, formdata, {
     headers: {
       "Content-Type": "application/json",
     },
     withCredentials: true,
   });
-  console.log(data);
+  // console.log(data);
   return data;
 };
 
@@ -43,6 +44,5 @@ export const deleteProductAPI = async (id) => {
   const { data } = await axios.delete(`${DELETE_PRODUCT_URL}/${id}`, {
     withCredentials: true,
   });
-  console.log(data);
   return data;
 };
