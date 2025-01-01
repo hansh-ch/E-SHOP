@@ -63,7 +63,7 @@ export default function App() {
           }
         >
           <Route index element={<ShopHomepage />} />
-          <Route path="listing" index element={<ShopProductListing />} />
+          <Route path="listings" index element={<ShopProductListing />} />
           <Route path="checkout" index element={<ShopCheckout />} />
           <Route path="account" index element={<ShopAccount />} />
         </Route>

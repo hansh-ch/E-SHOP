@@ -17,10 +17,7 @@ export default function AuthProtect({ children }) {
   useEffect(
     function () {
       const checkAuth = async () => {
-        const data = await verifyAuth().catch((err) => {
-          console.log(err);
-          // toast.error(err.response.data.message);
-        });
+        const data = await verifyAuth();
         // console.log(data.data);
         dispatch(loginUser(data?.data));
       };
