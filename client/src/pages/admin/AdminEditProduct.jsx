@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "react-toastify";
 
 export default function AdminEditProduct({
   product,
@@ -108,6 +105,12 @@ export default function AdminEditProduct({
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
                 />
+              </li>
+              <li>
+                <p className="text-gray-600">
+                  <span className="font-semibold mr-4">Note:</span>
+                  Image edit feature is not available currently.
+                </p>
               </li>
             </ul>
 

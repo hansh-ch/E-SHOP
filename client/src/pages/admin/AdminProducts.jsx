@@ -106,11 +106,12 @@ export default function AdminProducts() {
     }
     setAllProducts(data?.data);
   }
-
+  //==> EVENT-> EDIT PRODUCT <==//
   async function handleEditSubmit(formdata) {
     const response = await editProductAPI(editId, formdata);
     if (response.status === "success") {
       setIsModalOpen(false);
+      toast.success("Product editted successfully");
       const data = await getAllProductAPI();
       if (data.status === "fail") {
         return;

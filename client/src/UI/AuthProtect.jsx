@@ -26,9 +26,8 @@ export default function AuthProtect({ children }) {
       };
       checkAuth();
     },
-    [dispatch]
+    [dispatch, isAuthenticated]
   );
-
   if (isAuthenticated && location.pathname.includes("/login")) {
     if (currUser?.role === "admin") {
       return <Navigate to="/admin" />;
