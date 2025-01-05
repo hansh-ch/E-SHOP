@@ -1,11 +1,6 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import {
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+
 import {
   HousePlug,
   LogOut,
@@ -14,16 +9,28 @@ import {
   User,
   UserPen,
 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { logoutUserAPI } from "@/services/authAPIServices";
+import { logoutUser } from "@/slices/userSlice";
 
 export default function ShopHeader({ open, setOpen }) {
   const user = useSelector((state) => state.user?.currentUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    const res = await logoutUserAPI();
+    if (res.status === "success") {
+      dispatch(logoutUser());
+      navigate("../auth/login");
+    }
+  }
   return (
     <>
       <header className="sticky top-0 z-20 w-full bg-background border-b">
@@ -41,47 +48,55 @@ export default function ShopHeader({ open, setOpen }) {
             <NavLink to="/shop">Home</NavLink>
             <NavLink to="/shop/listings">Men</NavLink>
             <NavLink to="/shop/listings">Women</NavLink>
+            <NavLink to="/shop/listings">Kids</NavLink>
+            <NavLink to="/shop/listings">Footwear</NavLink>
+            <NavLink to="/shop/listings">Accessories</NavLink>
+          </ul>
+          <div className="md:flex items-center gap-4 hidden ">
+            {user?.role === "admin" && (
+              <Link
+                className="flex gap-3 items-center border border-green-500 p-2 rounded-sm"
+                to="/admin"
+              >
+                <span>Admin Page</span>
+              </Link>
+            )}
             <NavLink to="/shop/cart" className="flex gap-1">
-              <ShoppingCart />
+              <ShoppingCart className="w-6" />
               Cart
             </NavLink>
-            <NavLink
-              to="/users/profile"
-              className="flex items-center"
-            ></NavLink>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline">
-                  <User />
-                  {user?.username}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-40">
-                <DropdownMenuItem>
-                  <Link className="flex gap-3 items-center">
-                    <UserPen />
-                    <span>Profile</span>
-                  </Link>
-                </DropdownMenuItem>
-                {user?.role === "admin" && (
+            <div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">
+                    <User />
+                    {user?.username}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-40">
                   <DropdownMenuItem>
-                    <Link className="flex gap-3 items-center">
-                      <span>Admin-Home</span>
+                    <Link className="flex gap-3 items-center" to="/account">
+                      <UserPen />
+                      <span>Account</span>
                     </Link>
                   </DropdownMenuItem>
-                )}
-                <DropdownMenuItem>
-                  <button className="flex gap-3 items-center">
-                    <LogOut />
-                    <span>Logout</span>
-                  </button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </ul>
+
+                  <DropdownMenuItem>
+                    <button
+                      className="flex gap-3 items-center"
+                      onClick={handleLogout}
+                    >
+                      <LogOut />
+                      <span>Logout</span>
+                    </button>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 p-4"></div>
+          </div>
         </div>
       </header>
-      ;
     </>
   );
 }

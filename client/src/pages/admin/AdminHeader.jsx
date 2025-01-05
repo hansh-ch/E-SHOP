@@ -23,6 +23,10 @@ export default function AdminHeader({ setOpen }) {
         <span className="sr-only">Toggle Menu</span>
       </Button>
       <div className="flex flex-1 justify-end items-center">
+        <Button onClick={() => navigate("/shop")} className="mr-6 opacity-80">
+          <span>Shop Page</span>
+        </Button>
+
         <Button
           className="inline-flex rounded-md hover:opacity-90"
           onClick={handleLogout}

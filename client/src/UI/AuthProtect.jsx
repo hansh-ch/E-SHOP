@@ -2,43 +2,39 @@ import { verifyAuth } from "@/services/authAPIServices";
 import { loginUser } from "@/slices/userSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 export default function AuthProtect({ children }) {
   const user = useSelector((state) => state.user);
   const isAuthenticated = user?.isAuthenticated;
   const currUser = user?.currentUser;
+
   // let user = {
   //   role: "user",
   // };
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(
     function () {
       const checkAuth = async () => {
-        const data = await verifyAuth();
-        // console.log(data.data);
+        const data = await verifyAuth().catch((err) => {
+          console.log("error");
+        });
+        if (!data) return;
         dispatch(loginUser(data?.data));
+        if (isAuthenticated) {
+          navigate("/shop");
+        }
       };
       checkAuth();
     },
     [dispatch, isAuthenticated]
   );
-  if (isAuthenticated && location.pathname.includes("/login")) {
-    if (currUser?.role === "admin") {
-      return <Navigate to="/admin" />;
-    }
-    if (currUser?.role === "user") {
-      return <Navigate to="/shop" />;
-    }
+  if (!isAuthenticated) {
+    return <Navigate to="/auth/login" />;
   }
-  if (
-    isAuthenticated &&
-    currUser?.role === "admin" &&
-    location.pathname.includes("/shop")
-  ) {
-    return <Navigate to="/admin" />;
-  }
-  return isAuthenticated ? <>{children}</> : <Navigate to="/auth/login" />;
+
+  return isAuthenticated && <>{children}</>;
 }
