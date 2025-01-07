@@ -32,9 +32,6 @@ export default function AuthProtect({ children }) {
     },
     [dispatch, isAuthenticated]
   );
-  if (!isAuthenticated) {
-    return <Navigate to="/auth/login" />;
-  }
 
   return isAuthenticated && <>{children}</>;
 }

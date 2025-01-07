@@ -16,6 +16,7 @@ const {
 const { upload } = require("../utils/cloudinary");
 const router = express.Router();
 
+// router.use(verifyAuth);
 router.post("/upload", upload.single("image"), uploadImage);
 router.route("/create").post(createProduct);
 router.route("/products").get(getAllProducts);

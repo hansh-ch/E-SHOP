@@ -25,8 +25,16 @@ const uploadImage = catchAsync(async (req, res, next) => {
 //@api ==> /admin/create
 //@access==> private->Admin
 const createProduct = catchAsync(async (req, res, next) => {
-  const { title, description, category, brand, price, inStock, imageUrl } =
-    req.body;
+  const {
+    title,
+    description,
+    category,
+    categoryFor,
+    brand,
+    price,
+    inStock,
+    imageUrl,
+  } = req.body;
 
   if (!req.body) {
     return;
@@ -36,6 +44,7 @@ const createProduct = catchAsync(async (req, res, next) => {
     description,
     category,
     brand,
+    categoryFor,
     price,
     inStock,
     imageUrl,
@@ -68,7 +77,6 @@ const getAllProducts = catchAsync(async (req, res, next) => {
 //@api ==> /admin/update:id
 //@access==> private->admin
 const updateProduct = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });

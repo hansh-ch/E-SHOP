@@ -12,14 +12,14 @@ const filterOptions = {
   brands: [
     { id: "nike", label: "Nike" },
     { id: "puma", label: "Puma" },
-    { id: "addidas", label: "Addidas" },
+    { id: "adidas", label: "Adidas" },
     { id: "levis", label: "Levis" },
     { id: "zara", label: "Zara" },
     { id: "h&m", label: "H&M" },
   ],
 };
 
-function ProductFilterTab() {
+function ProductFilterTab({ handleFilter, filters }) {
   return (
     <div className="bg-background rounded-lg shadow-md">
       <div className="p-4 border-b-2">
@@ -31,7 +31,10 @@ function ProductFilterTab() {
 
         {filterOptions.category.map((item) => (
           <li key={item.id} className="list-none flex gap-4 items-center ">
-            <Checkbox />
+            <Checkbox
+              onCheckedChange={() => handleFilter("category", item.id)}
+              checked={filters?.categories.includes(item.id)}
+            />
             <p className="font-semibold text-sm md:text-base">{item.label}</p>
           </li>
         ))}
@@ -43,7 +46,10 @@ function ProductFilterTab() {
         <p className="font-semibold">Brands: </p>
         {filterOptions.brands.map((item) => (
           <li key={item.id} className="list-none flex gap-4 items-center ">
-            <Checkbox />
+            <Checkbox
+              onCheckedChange={() => handleFilter("brands", item.id)}
+              checked={filters?.brands.includes(item.id)}
+            />
             <p className="font-semibold">{item.label}</p>
           </li>
         ))}

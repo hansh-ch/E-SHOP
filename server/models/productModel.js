@@ -14,6 +14,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, "Category cannot be empty"],
     },
+    categoryFor: {
+      type: String,
+      required: [true, "categoryFor cannot be empty"],
+    },
     brand: {
       type: String,
       required: [true, "Brand cannot be empty"],

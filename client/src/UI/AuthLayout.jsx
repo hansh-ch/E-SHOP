@@ -1,8 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 export default function AuthLayout() {
+  const user = useSelector((state) => state.user);
+  if (!user.isAuthenticated) {
+    <Navigate to="/auth/login" />;
+  }
   return (
     <div className="min-h-screen max-w-6xl mx-auto flex">
       <div className="hidden lg:flex items-center  bg-black w-1/2  h-screen justify-center">

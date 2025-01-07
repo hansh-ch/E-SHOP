@@ -14,6 +14,15 @@ import {
 } from "@/services/productAPIServices";
 import AdminProductItem from "@/UI/AdminProductItem";
 import AdminEditProduct from "./AdminEditProduct";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function AdminProducts() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +30,7 @@ export default function AdminProducts() {
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
+  const [categoryFor, setCategoryFor] = useState("");
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
   const [file, setFile] = useState(null);
@@ -39,7 +49,7 @@ export default function AdminProducts() {
       setAllProducts(data?.data);
     })();
   }, []);
-  console.log(allProducts);
+  // console.log(allProducts);
 
   //==> EVENT-> CREATING PRODUCT <==//
   async function handleAddProduct() {
@@ -50,6 +60,7 @@ export default function AdminProducts() {
       title,
       description,
       category,
+      categoryFor,
       brand,
       price,
       inStock: stock,
@@ -119,6 +130,7 @@ export default function AdminProducts() {
       setAllProducts(data?.data);
     }
   }
+
   return (
     <section className="flex flex-col mx-auto w-full  overflow-x-scroll relative ">
       <div className="mb-5 flex justify-end w-full">
@@ -165,6 +177,26 @@ export default function AdminProducts() {
               />
             </li>
             <li className="flex flex-col space-y-3">
+              <Label htmlFor="categoryfor">Category-For</Label>
+              <Select
+                value={categoryFor}
+                onValueChange={(value) => setCategoryFor(value)}
+                id="categoryfor"
+              >
+                <SelectTrigger className="">
+                  <SelectValue placeholder="e.g. Men" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="men">Men</SelectItem>
+                    <SelectItem value="women">Women</SelectItem>
+                    <SelectItem value="kids">Kids</SelectItem>
+                    <SelectItem value="unisex">Unisex</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </li>
+            <li className="flex flex-col space-y-3">
               <Label htmlFor="brand">Brand</Label>
               <Input
                 type="text"
@@ -175,6 +207,7 @@ export default function AdminProducts() {
                 onChange={(e) => setBrand(e.target.value)}
               />
             </li>
+
             <li className="flex flex-col space-y-3">
               <Label htmlFor="price">Price</Label>
               <Input

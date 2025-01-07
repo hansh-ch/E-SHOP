@@ -8,6 +8,7 @@ const app = express();
 
 const authRouter = require("./routes/authRoutes");
 const adminRouter = require("./routes/adminRoutes");
+const shopRouter = require("./routes/shopRoutes");
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -48,7 +49,7 @@ app.listen(port, () => {
 //Routes
 app.use("/api/auth", authRouter);
 app.use("/api/admin", adminRouter);
-app.use("/api/products", adminRouter);
+app.use("/api/shop/products", shopRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

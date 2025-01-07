@@ -25,14 +25,7 @@ export default function App() {
         {/* <Route path="/" /> */}
         {/* AUTH ROUTES */}
         <Route path="/" index element={<Overview />} />
-        <Route
-          path="auth"
-          element={
-            <AuthProtect>
-              <AuthLayout />
-            </AuthProtect>
-          }
-        >
+        <Route path="auth" element={<AuthLayout />}>
           <Route path="signup" element={<Signup />} />
           <Route path="login" element={<Login />} />
         </Route>
